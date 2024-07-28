@@ -23,12 +23,12 @@ local groups = reload("user.maps.groups")
 vim.keymap.set('n', '<leader><space>', ':WhichKey <leader><CR>', { desc = 'Which Key: View Options' })
 
 vim.keymap.set('n', 'v<space>', ':WhichKey v<CR>', { desc = 'Which Key: Visual Options' })
-
 vim.keymap.set('n', 'd<space>', ':WhichKey d<CR>', { desc = 'Which Key: Delete Options' })
 
 vim.keymap.set('n', 'y<space>', ':WhichKey y<CR>', { desc = 'Which Key: Yank Options' })
 
 vim.keymap.set('n', 'c<space>', ':WhichKey c<CR>', { desc = 'Which Key: Change Options' })
+
 local wk = lvim.builtin.which_key
 
 -- Disable
@@ -44,6 +44,7 @@ wk.mappings["w"] = {}
 wk.mappings["T"] = {}
 
 -- Singles
+-- ## FIX: Only opens won't close have to use ctl + \
 wk.mappings["\\"] = { ':ToggleTerm<CR>', 'Open Terminal' }
 wk.mappings["e"] = { "<cmd>NvimTreeToggle<CR>", "Explorer" }
 -- wk.mappings[""] = { "", "" }

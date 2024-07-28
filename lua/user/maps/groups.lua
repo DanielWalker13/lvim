@@ -168,6 +168,7 @@ M.search = {
   -- b = {'<cmd>Telescope buffers<cr>', 'Search Buffers'},
   b = { '<cmd>Telescope file_browser<cr>', 'Search Buffers' },
   d = { '<cmd>Telescope spell_suggest<cr>', 'Seach Dictionary' },
+  e = { '<cmd>TodoTelescope<cr>', 'Errors' },
   f = { '<cmd>Telescope find_files<cr>', "Seearh Files: Current Dir" },
   --     r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File", noremap=false, buffer = 123 }, -- additional options for creating the keymap
   g = {
