@@ -1,2 +1,52 @@
+# Ignore swap files
+*.swp
+*.swo
 
+# Ignore backup files
+*.bak
+*.tmp
+*.temp
+
+# Ignore undo history files
+*.un~
+
+# Ignore compiled Lua files
+*.luac
+
+# Ignore Neovim plugins
+site/
+
+# Ignore session files
+session/
+
+# Ignore log files
+*.log
+
+# Ignore LunarVim specific logs and backup files
+lv.*
+
+# Ignore cache and state directories
+state/
+cache/
+sessions/
+view/
+shada/
+
+# Ignore any binaries
+bin/
+
+# Ignore macOS specific files
+.DS_Store
+
+# Ignore Linux specific trash files
+.Trash-*
+
+# Ignore LunarVim specific runtime files
+runtime/
+
+# Ignore packer compiled plugins
 plugin/packer_compiled.lua
+
+
+# Ignore lazy-lock files
+lazy-lock.json

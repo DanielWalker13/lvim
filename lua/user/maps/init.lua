@@ -1,4 +1,4 @@
 reload("user.maps.normal")
--- require("user.maps.insert")
--- require("user.maps.visual")
+reload("user.maps.visual")
 reload("user.maps.which_key")
+reload("user.maps.alter_cmp_maps")

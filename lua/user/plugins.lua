@@ -1,19 +1,41 @@
 -- Create readme for unused potential plugins / config
-
 lvim.plugins = {
-  { "ThePrimeagen/harpoon",          event = "BufRead" },      -- Lazy load when a buffer is read
-  { "folke/todo-comments.nvim",      event = "BufWinEnter" },  -- Load when entering a window
-  { "tpope/vim-repeat",              event = "InsertEnter" },  -- Load when entering insert mode
-  { "tpope/vim-fugitive",            cmd = "G" },              -- Load when the :G command is used
-  { "vim-scripts/IndexedSearch",     event = "CmdlineEnter" }, -- Load when entering command-line mode
-  { "psliwka/vim-smoothie",          event = "VimEnter" },     -- Load after Neovim starts
-  { "mbbill/undotree",               cmd = "UndotreeToggle" }, -- Load when the :UndotreeToggle command is used
-  { "axiaoxin/vim-json-line-format", ft = "json" },            -- Load when a JSON file is opened
-  { "godlygeek/tabular",             cmd = "Tabularize" },     -- Load when the :Tabularize command is used
-  { "github/copilot.vim",            event = "InsertEnter" },  -- Load when entering insert mode
-  { "kylechui/nvim-surround",        event = "BufRead" },      -- Load when a buffer is read
-  { "folke/trouble.nvim",            cmd = "TroubleToggle" },  -- Load when the :TroubleToggle command is used
+  { "ThePrimeagen/harpoon" },        -- Lazy load when a buffer is read
+  { "folke/todo-comments.nvim" },    -- Load when entering a window
+  { "tpope/vim-repeat" },            -- Load when entering insert mode
+  {
+    "tpope/vim-fugitive",            -- Load when the :G command is used
+    { "vim-scripts/IndexedSearch" }, -- Load when entering command-line mode
+    { "psliwka/vim-smoothie" },
+    event = "VimEnter"
+  },                                                                         -- Load after Neovim starts
+  { "mbbill/undotree",                             cmd = "UndotreeToggle" }, -- Load when the :UndotreeToggle command is used
+  { "axiaoxin/vim-json-line-format",               ft = "json" },            -- Load when a JSON file is opened
+  { "godlygeek/tabular",                           cmd = "Tabularize" },     -- Load when the :Tabularize command is used
+  { "github/copilot.vim" },                                                  -- Load when entering insert mode
+  { "kylechui/nvim-surround" },                                              -- Load when a buffer is read
+  { "folke/trouble.nvim" },                                                  -- Load when the :TroubleToggle command is used
+  { "nvim-telescope/telescope-live-grep-args.nvim" },
 }
+
+
+-------------------- Potential Core Plugin Addition --------------------
+
+-- Do more research on these plugins and consider adding them to the core plugins
+
+-- Rooter plugin
+-- {
+--   "airblade/vim-rooter",
+--   config = function()
+--     -- Configure rooter to use `pyproject.toml` as a root indicator
+--     vim.g.rooter_patterns = { 'pyproject.toml', '.git', 'Makefile', 'package.json' }
+--     vim.g.rooter_manual_only = 0 -- Manual mode, toggle with :RooterToggle
+--     -- Enable debugging
+--     vim.g.rooter_debug = 1
+--   end,
+--   event = "BufEnter",
+-- },
+
 
 -------------------- Alpha --------------------
 
@@ -51,8 +73,8 @@ copilot.setup({
     debounce = 75,
     keymap = {
       accept = "<C-f>",
-      next = "<M-]>",
-      prev = "<M-[>",
+      next = "<C-n>",
+      prev = "<C-p>",
       dismiss = "<C-]>",
     },
   },
@@ -89,10 +111,16 @@ harpoon.setup({
   },
 })
 
+-------------------- Mason --------------------
+lvim.builtin.mason.ensure_installed = {
+  "prettier",
+}
+
 -------------------- Nvim Tree --------------------
 
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
+
 -- TODO: Eval: not created by me
 --
 -- lvim.builtin.nvimtree.setup.view.width = 50
@@ -159,15 +187,37 @@ lvim.builtin.telescope.defaults.mappings = {
   },
 }
 
+
 lvim.builtin.telescope.on_config_done = function(telescope)
   pcall(telescope.load_extension, "ui-select")
+  pcall(telescope.load_extension, "live_grep_args")
 end
 
 lvim.builtin.telescope.extensions = {
   ["ui-select"] = {
     require("telescope.themes").get_cursor({}),
   },
+  live_grep_args = {
+    auto_quoting = true, -- enable/disable auto-quoting
+    mappings = {         -- extend mappings
+      i = {
+        ["<C-k>"] = require('telescope-live-grep-args.actions').quote_prompt(),
+        ["<C-i>"] = require('telescope-live-grep-args.actions').quote_prompt({ postfix = " --iglob " }),
+      },
+    },
+  },
 }
+
+
+-- lvim.builtin.telescope.on_config_done = function(telescope)
+--   pcall(telescope.load_extension, "ui-select")
+-- end
+
+-- lvim.builtin.telescope.extensions = {
+--   ["ui-select"] = {
+--     require("telescope.themes").get_cursor({}),
+--   },
+-- }
 
 
 -------------------- Terminal --------------------
@@ -249,24 +299,48 @@ require('todo-comments').setup(task_configs)
 
 -------------------- Treesitter --------------------
 
+
 lvim.builtin.treesitter.ignore_install = { "haskell" }
-lvim.builtin.treesitter.highlight.enable = true
+lvim.builtin.treesitter.highlight = {
+  enable = true,
+  additional_vim_regex_highlighting = false
+}
+
 lvim.builtin.treesitter.autotag.enable = true
 lvim.builtin.treesitter.context_commentstring.enable = true
+lvim.builtin.treesitter.playground = {
+  enable = true,
+  disable = {},
+  updatetime = 25,         -- Debounced time for highlighting nodes in the playground from source code
+  persist_queries = false, -- Whether the query persists across vim sessions
+}
 
 lvim.builtin.treesitter.ensure_installed = {
   "bash",
   "c",
   "css",
+  "cmake",
+  "comment",
+  "css",
   "csv",
+  "dockerfile",
+  "gitignore",
+  "go",
+  "graphql",
+  "html",
   "hcl",
   "helm",
+  "ini",
   "java",
   "javascript",
   "jsdoc",
   "json",
   "lua",
+  "make",
+  "markdown",
+  "markdown_inline",
   "pem",
+  "php",
   "python",
   "pem",
   "rego",
@@ -274,7 +348,17 @@ lvim.builtin.treesitter.ensure_installed = {
   "tmux",
   "tsx",
   "typescript",
+  "regex",
+  "ruby",
   "rust",
+  "pydoc",
+  "sql",
+  "swift",
+  "terraform",
+  "toml",
+  "typescript",
+  "vim",
+  "vimdoc",
   "xml",
   "yaml",
 }
@@ -286,7 +370,7 @@ if not present then
 end
 
 treesitter_context.setup({
-  enable = false,        -- Enable this plugin (Can be enabled/disabled later via commands)
+  enable = true,         -- Enable this plugin (Can be enabled/disabled later via commands)
   max_lines = 0,         -- How many lines the window should span. Values <= 0 mean no limit.
   trim_scope = "outer",  -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
   min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.

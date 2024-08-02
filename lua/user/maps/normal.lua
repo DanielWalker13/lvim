@@ -30,8 +30,8 @@ n_map['gj'] = { 'j', 'Motion works with wrap on seperate line' }
 
 
 -- TODO: Additional testing to ensure this is working properly
--- This jump by class tag, is this really ruired? Is there not a better way to handle this?
 -- Remaps class definition jumps to class and function for python
+--
 -- autocmd FileType python nnoremap <buffer> [[ ?^class\\|^\s*def<CR>
 -- autocmd FileType python nnoremap <buffer> ]] /^class\\|^\s*def<CR>
 -- autocmd FileType python nnoremap <buffer> [[ ?^\s*\zs\<class\>\\|^\s*\zs\<def\><CR>

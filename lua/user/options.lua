@@ -5,6 +5,30 @@
 -- testing
 -- lvim.builtin.search.indexed_search_mappings = false
 
+-- Setup Python Path
+function set_python3_host()
+  local handle = io.popen("which python3")
+  if handle == nil then
+    print("Failed to execute 'which python3'")
+    return
+  end
+
+  local python3_path = handle:read("*a")
+  handle:close()
+
+  -- Remove newline character from the output
+  python3_path = python3_path:gsub("%s+", "")
+
+  if python3_path ~= "" then
+    vim.g.python3_host_prog = python3_path
+  else
+    print("Python 3 path not found!")
+  end
+end
+
+set_python3_host()
+
+
 
 -- Enable filetype plugins
 vim.cmd [[
@@ -72,7 +96,7 @@ lvim.transparent_window = true
 vim.opt.cursorline = true -- Highlights current line background
 
 
-vim.g.python3_host_prog = '~/.asdf/shims/python'
+-- vim.g.python3_host_prog = '~/.asdf/shims/python'
 
 -- NOTE: Not Set by Me
 -- EVAL: I had this set to false
