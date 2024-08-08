@@ -17,6 +17,17 @@ reload("user.options") -- Issue with saving lua files
 reload("user.autocmd") -- Not Working
 
 
+-- Ensure Mason is updated
+local mason_update = require('user.mason_update')
+mason_update.ensure_mason_updated()
+
+-- Check Mason registry and update if necessary
+mason_update.check_mason_registry()
+
+-- List registry files for debugging
+-- mason_update.list_registry_files()
+
+
 -- Function to check and print if a file is loaded
 -- function checkFileLoaded(filename)
 --   if vim.g['loaded_' .. filename] then
