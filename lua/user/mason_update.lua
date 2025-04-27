@@ -48,6 +48,7 @@ function M.repair_broken_packages()
   local bin_path = mason_data .. "bin/"
   local mr = require("mason-registry")
 
+  -- Get directory entries
   local function get_dir_entries(path)
     local entries = {}
     local handle = uv.fs_scandir(path)
@@ -61,10 +62,23 @@ function M.repair_broken_packages()
     return entries
   end
 
-  local function package_has_bin_files(tool)
+  -- Check if the package has a bin folder with any files
+  local function package_has_simple_bin(tool)
     local bin_dir = packages_path .. tool .. "/bin/"
     local entries = get_dir_entries(bin_dir)
     return entries and #entries > 0
+  end
+
+  -- Check if a symlink exists for the tool
+  local function has_symlink(tool)
+    local symlink = bin_path .. tool
+    return uv.fs_stat(symlink) ~= nil
+  end
+
+  -- Check if a staging (partial install) file exists
+  local function has_staging(tool)
+    local staged_file = staging_path .. tool
+    return uv.fs_stat(staged_file) ~= nil
   end
 
   local packages = get_dir_entries(packages_path)
@@ -80,12 +94,9 @@ function M.repair_broken_packages()
     local tool = entry.name
     total = total + 1
 
-    local staged_file = staging_path .. tool
-    local symlink = bin_path .. tool
-
-    local staging_exists = uv.fs_stat(staged_file) ~= nil
-    local symlink_exists = uv.fs_stat(symlink) ~= nil
-    local bin_exists = package_has_bin_files(tool)
+    local staging_exists = has_staging(tool)
+    local symlink_exists = has_symlink(tool)
+    local bin_exists = package_has_simple_bin(tool)
 
     local broken = false
 
