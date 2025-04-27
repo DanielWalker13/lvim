@@ -8,14 +8,15 @@ lvim.plugins = {
     { "vim-scripts/IndexedSearch" }, -- Load when entering command-line mode
     { "psliwka/vim-smoothie" },
     event = "VimEnter"
-  },                                                                         -- Load after Neovim starts
-  { "mbbill/undotree",                             cmd = "UndotreeToggle" }, -- Load when the :UndotreeToggle command is used
-  { "axiaoxin/vim-json-line-format",               ft = "json" },            -- Load when a JSON file is opened
-  { "godlygeek/tabular",                           cmd = "Tabularize" },     -- Load when the :Tabularize command is used
-  { "github/copilot.vim" },                                                  -- Load when entering insert mode
-  { "kylechui/nvim-surround" },                                              -- Load when a buffer is read
-  { "folke/trouble.nvim" },                                                  -- Load when the :TroubleToggle command is used
-  { "nvim-telescope/telescope-live-grep-args.nvim" },
+  },                                                                      -- Load after Neovim starts
+  { "mbbill/undotree",                          cmd = "UndotreeToggle" }, -- Load when the :UndotreeToggle command is used
+  { "axiaoxin/vim-json-line-format",            ft = "json" },            -- Load when a JSON file is opened
+  { "godlygeek/tabular",                        cmd = "Tabularize" },     -- Load when the :Tabularize command is used
+  { "github/copilot.vim" },                                               -- Load when entering insert mode
+  { "kylechui/nvim-surround" },                                           -- Load when a buffer is read
+  { "folke/trouble.nvim" },                                               -- Load when the :TroubleToggle command is used
+  -- { "nvim-telescope/telescope-live-grep-args.nvim" },
+  { "WhoIsSethDaniel/mason-tool-installer.nvim" },
 }
 
 
@@ -35,7 +36,6 @@ lvim.plugins = {
 --   end,
 --   event = "BufEnter",
 -- },
-
 
 
 

@@ -10,9 +10,8 @@ lvim.builtin.alpha.mode = "dashboard"
 
 
 -------------------- Mason --------------------
-lvim.builtin.mason.ensure_installed = {
-  "prettier",
-}
+
+-- Install managed via the mason installer plugin in plugins.lua
 
 -------------------- Nvim Tree --------------------
 
@@ -24,7 +23,7 @@ lvim.builtin.nvimtree.setup.hijack_directories = {
 lvim.builtin.nvimtree.setup.update_cwd = true
 lvim.builtin.nvimtree.setup.view = {
   width = 30,
-  side = 'right', -- Open nvim-tree on the right side
+  side = 'left', -- Open nvim-tree on the right side
 }
 lvim.builtin.nvimtree.setup.actions = {
   open_file = {
@@ -156,7 +155,6 @@ lvim.builtin.treesitter.playground = {
 }
 
 lvim.builtin.treesitter.ensure_installed = {
-  "bash",
   "c",
   "css",
   "cmake",
