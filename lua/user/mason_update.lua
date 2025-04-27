@@ -81,6 +81,14 @@ function M.repair_broken_packages()
     return uv.fs_stat(staged_file) ~= nil
   end
 
+  -- Check if there is a fallback executable in node_modules/vscode-langservers-extracted/bin/
+  local function package_has_vscode_extracted_bin(tool)
+    local fallback_bin_dir = packages_path .. tool .. "/node_modules/vscode-langservers-extracted/bin/"
+    local entries = get_dir_entries(fallback_bin_dir)
+    return entries and #entries > 0
+  end
+
+  -- Main repair process
   local packages = get_dir_entries(packages_path)
   if not packages then
     vim.notify("[Mason Repair] No installed packages found.", vim.log.levels.WARN)
@@ -103,7 +111,11 @@ function M.repair_broken_packages()
     if staging_exists then
       broken = true
     elseif not symlink_exists and not bin_exists then
-      broken = true
+      -- fallback check for node_modules/vscode-langservers-extracted/bin
+      local fallback_exists = package_has_vscode_extracted_bin(tool)
+      if not fallback_exists then
+        broken = true
+      end
     end
 
     if broken then
